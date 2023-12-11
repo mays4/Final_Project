@@ -118,6 +118,21 @@ public class Instructor  implements Serializable {
         this.image_url = image_url;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public double getLang() {
+        return lang;
+    }
+
+    public double getLit() {
+        return lit;
+    }
+
+    public String getTask() {
+        return task;
+    }
 //    @Override
 //    public int describeContents() {
 //        return 0;
@@ -153,4 +168,6 @@ public class Instructor  implements Serializable {
     public String getDocumentID() {
         return documentID;
     }
+
+
 }

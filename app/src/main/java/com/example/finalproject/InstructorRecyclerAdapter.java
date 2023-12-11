@@ -24,7 +24,8 @@ public class InstructorRecyclerAdapter   extends RecyclerView.Adapter<Instructor
 
 
     interface InstructorListClickListener{
-        void onInstructorSelected(Instructor selectedInstructor);
+//        void onInstructorSelected(Instructor selectedInstructor);
+        void onInstructorclicked(int i);
     }
     Context context;
     ArrayList<Instructor> list;
@@ -68,11 +69,11 @@ public class InstructorRecyclerAdapter   extends RecyclerView.Adapter<Instructor
             // Perform the action you want when the button is clicked
             // You can use the listener to handle the click event or any other logic
             if (listener != null) {
-                listener.onInstructorSelected(list.get(position));
+                listener.onInstructorclicked(list.get(holder.getAdapterPosition()).getId());
             }
         });
 
-        holder.itemView.setOnClickListener(view -> listener.onInstructorSelected(list.get(holder.getAdapterPosition())));
+//        holder.itemView.setOnClickListener(view -> listener.onInstructorclicked(list.get(holder.getAdapterPosition())));
     }
 
     @Override

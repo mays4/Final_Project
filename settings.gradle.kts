@@ -7,6 +7,7 @@ pluginManagement {
 
 
     }
+
 }
 
 dependencyResolutionManagement {
@@ -29,7 +30,9 @@ dependencyResolutionManagement {
         }
 
 
+
     }
+
 }
 
 rootProject.name = "Final Project"

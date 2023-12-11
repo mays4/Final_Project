@@ -4,7 +4,13 @@ import static com.mapbox.maps.plugin.locationcomponent.LocationComponentUtils.ge
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+
 import android.os.Bundle;
 import android.util.Log;
 
@@ -20,6 +26,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -76,7 +83,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         getLocationComponent(mapView).removeOnIndicatorPositionChangedListener(onIndicatorPositionChangedListener);
                         getGestures(mapView).removeOnMoveListener(onMoveListener);
                         floatingActionButton.show();
+                        addMarkersToMap();
+
                 }
+            private void addMarkersToMap() {
+                if (instructorData != null && !instructorData.isEmpty()) {
+                    for (Instructor instructor : instructorData) {
+                        double latitude = instructor.getLang();
+                        double longitude = instructor.getLit();
+                        String title = instructor.getName();
+                        addMarker(latitude, longitude, title);
+                    }
+                }
+            }
+
+            private void addMarker(double latitude, double longitude, String title) {
+//                mapView.getMapboxMap().addMarker(new MarkerOptions()
+//                        .position(Point.fromLngLat(longitude, latitude))
+//                        .title(title));
+            }
 
                 @Override
                 public boolean onMove(@NonNull MoveGestureDetector moveGestureDetector) {
@@ -85,10 +110,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 @Override
                 public void onMoveEnd(@NonNull MoveGestureDetector moveGestureDetector) {
-
+                    Point centerPoint = mapView.getMapboxMap().getCameraState().getCenter();
+                    Log.d("MapMove", "Center Point: " + centerPoint.latitude() + ", " + centerPoint.longitude());
                 }
         };
 
+        @SuppressLint("UseCompatLoadingForDrawables")
         @Override
         protected void onCreate(Bundle savedInstanceState) {
                 super.onCreate(savedInstanceState);
@@ -153,7 +180,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         LocationComponentPlugin locationComponentPlugin = getLocationComponent(mapView);
                         locationComponentPlugin.setEnabled(true);
                         LocationPuck2D locationPuck2D = new LocationPuck2D();
-                        locationPuck2D.setBearingImage(AppCompatResources.getDrawable(MainActivity.this, R.drawable.baseline_location_on_24));
+                    locationPuck2D.setBearingImage(ContextCompat.getDrawable(this,  R.drawable.baseline_location_on_24));
                         locationComponentPlugin.setLocationPuck(locationPuck2D);
                         locationComponentPlugin.addOnIndicatorBearingChangedListener(onIndicatorBearingChangedListener);
                         locationComponentPlugin.addOnIndicatorPositionChangedListener(onIndicatorPositionChangedListener);
@@ -179,13 +206,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        adapter.notifyDataSetChanged(); // Notify the adapter that the data has changed
 
     }
-//    @SuppressLint("NotifyDataSetChanged")
-//    void updateAdapterWithData(ArrayList<Instructor> newData) {
-//        if (adapter != null) {
-//            adapter.setList(newData);
-//            adapter.notifyDataSetChanged();
-//        }
-//    }
+
 
 
     @Override
@@ -194,15 +215,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             fireStoreManager.getAllInstructors();
     }
 
-    @Override
-    public void onInstructorSelected(Instructor selectedInstructor) {
-
-    }
+//    @Override
+//    public void onInstructorSelected(Instructor selectedInstructor) {
+//
+//    }
 
     @Override
     public void onClick(View v) {
 
     }
+
+    @Override
+    public void onInstructorclicked(int i) {
+        Intent toInstructorDetails = new Intent(this, InstructorDetails.class);
+
+        //  the details of the selected item in the Intent as an extra
+        Instructor selectedInstructor = instructorData.get(i);
+        toInstructorDetails.putExtra("details", selectedInstructor );
+        startActivity(toInstructorDetails);
+    }
+
+
 }
 
 

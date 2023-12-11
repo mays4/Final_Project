@@ -10,7 +10,7 @@ android {
     defaultConfig {
         applicationId = "com.example.finalproject"
         minSdk = 30
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -38,7 +38,7 @@ android {
 dependencies {
 
 
-    implementation("androidx.room:room-runtime:2.6.1")
+
     implementation("com.google.firebase:firebase-storage:20.3.0")
     annotationProcessor("androidx.room:room-compiler:2.6.1")
     implementation ("androidx.appcompat:appcompat:1.6.1")

@@ -6,9 +6,13 @@
 
     <ImageView
         android:id="@+id/instructor_avatar_row"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:contentDescription="@string/avatar"
+        android:layout_width="48dp"
+    android:layout_height="48dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginStart="8dp"
+        android:radius="24dp"
+        android:scaleType="centerCrop"
+    android:contentDescription="@string/avatar"
         android:gravity="center"
         android:autofillHints="name"
         android:text="@string/avatar"
