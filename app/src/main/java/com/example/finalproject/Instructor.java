@@ -1,11 +1,5 @@
 package com.example.finalproject;
 
-import android.graphics.Bitmap;
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import androidx.annotation.NonNull;
-
 import java.io.Serializable;
 
 //@Entity
@@ -21,7 +15,8 @@ public class Instructor  implements Serializable {
     double lang;
     double lit;
     String image_url;
-    private  String task;
+    private final String task;
+
 
     public Instructor(String task,String name, String city, String subject, String phoneNumber, String email, double lang, double lit, String imageUrl) {
  
@@ -44,17 +39,17 @@ public class Instructor  implements Serializable {
 //        subject = in.readString();
 //        image_url =in.readString();
 //        if (in.readByte() == 0) {
-//            lang = null;
+//            lang = Double.parseDouble(null);
 //        } else {
 //            lang = in.readDouble();
 //        }
 //        if (in.readByte() == 0) {
-//            lit = null;
+//            lit = Double.parseDouble(null);
 //        } else {
 //            lit = in.readDouble();
 //        }
 //    }
-//
+
 //    public static final Creator<Instructor> CREATOR = new Creator<Instructor>() {
 //        @Override
 //        public Instructor createFromParcel(Parcel in) {
@@ -140,24 +135,22 @@ public class Instructor  implements Serializable {
 
 //    @Override
 //    public void writeToParcel(@NonNull Parcel dest, int flags) {
+//        this.dest = dest;
+//        this.flags = flags;
 //        dest.writeString(name);
 //        dest.writeString(phoneNumber);
 //        dest.writeString(email);
 //        dest.writeString(city);
 //        dest.writeString(subject);
 //        dest.writeString(image_url);
-//        if (lang == null) {
-//            dest.writeByte((byte) 0);
-//        } else {
-//            dest.writeByte((byte) 1);
+//
+//
+//
 //            dest.writeDouble(lang);
-//        }
-//        if (lit == null) {
-//            dest.writeByte((byte) 0);
-//        } else {
-//            dest.writeByte((byte) 1);
+//
+//
 //            dest.writeDouble(lit);
-//        }
+//
 //    }
 
     private String  documentID;
@@ -168,6 +161,13 @@ public class Instructor  implements Serializable {
     public String getDocumentID() {
         return documentID;
     }
+
+
+//    @Override
+//    public int describeContents() {
+//        return 0;
+//    }
+
 
 
 }

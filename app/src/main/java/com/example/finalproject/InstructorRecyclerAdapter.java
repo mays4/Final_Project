@@ -1,9 +1,6 @@
 package com.example.finalproject;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +16,6 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 public class InstructorRecyclerAdapter   extends RecyclerView.Adapter<InstructorRecyclerAdapter.InstructorViewHolder>{
-
 
 
 
@@ -69,11 +65,11 @@ public class InstructorRecyclerAdapter   extends RecyclerView.Adapter<Instructor
             // Perform the action you want when the button is clicked
             // You can use the listener to handle the click event or any other logic
             if (listener != null) {
-                listener.onInstructorclicked(list.get(holder.getAdapterPosition()).getId());
+                listener.onInstructorclicked(holder.getAdapterPosition());
             }
         });
-
-//        holder.itemView.setOnClickListener(view -> listener.onInstructorclicked(list.get(holder.getAdapterPosition())));
+//
+//       holder.itemView.setOnClickListener(view -> listener.onInstructorclicked(list.get(holder.getAdapterPosition())));
     }
 
     @Override

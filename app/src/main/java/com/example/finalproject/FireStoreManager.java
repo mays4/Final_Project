@@ -3,13 +3,9 @@ package com.example.finalproject;
 
 import android.util.Log;
 
-
-
-
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,7 +18,7 @@ public class FireStoreManager {
        void FireStoreMangerFinishUpdating(boolean statues);
     }
     FireStoreListener listener;
-    FirebaseFirestore db =FirebaseFirestore.getInstance();;
+    FirebaseFirestore db =FirebaseFirestore.getInstance();
 //    public FireStoreManager ( ) {
 //        if (this.db == null)
 //
@@ -106,6 +102,7 @@ public class FireStoreManager {
                             // Log the values to check if any are null
                             Log.d("FirebaseData", "Name: " + name);
                             Log.d("FirebaseData", "lat: " + latitude);
+                            Log.d("FirebaseData", "lag: " + longitude);
                             // ... log other fields similarly ...
 
                             Instructor instructor = new Instructor((String) document.get("task"),
@@ -122,12 +119,7 @@ public class FireStoreManager {
                             listFromFireStore.add(instructor);
                         }
 
-                        MyApp.mainLooperHandler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                listener.FireStoreMangerFinishWithListOfInstructors(listFromFireStore);
-                            }
-                        });
+                        MyApp.mainLooperHandler.post(() -> listener.FireStoreMangerFinishWithListOfInstructors(listFromFireStore));
 
                     } else {
                         Log.w("TAG", "Error getting documents.", task.getException());

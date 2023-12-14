@@ -10,11 +10,15 @@ import java.util.concurrent.Executors;
 
 public class MyApp extends Application {
 
-//    NetworkingManger networkingManger = new NetworkingManger();
+
+
+//   FireStoreManager fireStoreManager  = new FireStoreManager();
     ArrayList<Instructor> listOfInstructors = new ArrayList<>(0);
+
 
     static ExecutorService executorService = Executors.newFixedThreadPool(4);
     static Handler mainLooperHandler = new Handler(Looper.getMainLooper());
+    static Handler mainhandler = new Handler(Looper.getMainLooper());
 
 
 

@@ -2,17 +2,18 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp">
 
     <ImageView
         android:id="@+id/instructor_avatar_row"
         android:layout_width="48dp"
-    android:layout_height="48dp"
-    android:layout_marginEnd="8dp"
-    android:layout_marginStart="8dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:radius="24dp"
         android:scaleType="centerCrop"
-    android:contentDescription="@string/avatar"
+        android:contentDescription="@string/avatar"
         android:gravity="center"
         android:autofillHints="name"
         android:text="@string/avatar"
@@ -40,6 +41,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/more"
+        android:backgroundTint="@color/black"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/instructor_name_row"
