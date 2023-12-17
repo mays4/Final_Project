@@ -3,11 +3,15 @@ package com.example.finalproject;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
 
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
@@ -19,29 +23,61 @@ FireStoreManager.FireStoreListener{
     FireStoreManager fireStoreManager;
 
     InstructorRecyclerAdapter instructorRecyclerAdapter;
-    @SuppressLint("MissingInflatedId")
+    @SuppressLint({"MissingInflatedId", "NotifyDataSetChanged"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.instructor_list);
-        Toast.makeText(this, "Test", Toast.LENGTH_SHORT).show();
 
-     instructorViewList= findViewById(R.id.recyclerlist);
-       instructorsList = ((MyApp) getApplication()).listOfInstructors;
+        instructorViewList = findViewById(R.id.recyclerlist);
+        instructorsList = ((MyApp) getApplication()).listOfInstructors;
 
         instructorRecyclerAdapter = new InstructorRecyclerAdapter(instructorsList, this);
         instructorRecyclerAdapter.listener = this; // step 4
-        instructorViewList.setAdapter( instructorRecyclerAdapter);
-        fireStoreManager= new FireStoreManager();
+        instructorViewList.setAdapter(instructorRecyclerAdapter);
+        fireStoreManager = new FireStoreManager();
         fireStoreManager.listener = this;
 
         instructorViewList.setLayoutManager(new LinearLayoutManager(this));
+        ItemTouchHelper.SimpleCallback simpleItemTouchCallback =
+                new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+                    @Override
+                    public boolean onMove(@NotNull RecyclerView recyclerView, RecyclerView.@NotNull ViewHolder viewHolder, RecyclerView.@NotNull ViewHolder target) {
+                        return false;
+                    }
+
+                    @SuppressLint("NotifyDataSetChanged")
+                    @Override
+                    public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                        int position = viewHolder.getAdapterPosition();
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(InstructorList.this);
+                        builder.setMessage("are you sure you want to delete this instructor").
+                                setPositiveButton(getString(R.string.ok), (dialog, which) -> {
+
+                            fireStoreManager.deleteInstructor(instructorsList.get(position));
+
+                            instructorsList.remove(position);
+
+                            instructorRecyclerAdapter.notifyDataSetChanged();
+
+
+                        }).setNegativeButton(getString(R.string.no),(dialog, which) -> instructorRecyclerAdapter.notifyDataSetChanged());
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.show();
+
+                    }
+                };
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+        itemTouchHelper.attachToRecyclerView(instructorViewList);
+
 
         instructorRecyclerAdapter = new InstructorRecyclerAdapter(instructorsList, this);
-        instructorRecyclerAdapter.listener = this; // step 4
+        instructorRecyclerAdapter.listener = this;
 
         instructorViewList.setAdapter(instructorRecyclerAdapter);
         fireStoreManager.getAllInstructors();
+
 
 
 
@@ -49,22 +85,22 @@ FireStoreManager.FireStoreListener{
     @SuppressLint("NotifyDataSetChanged")
     @Override
     public void FireStoreMangerFinishWithListOfInstructors(ArrayList<Instructor> list2) {
-        instructorsList = list2;
-        ((MyApp) getApplication()).listOfInstructors = instructorsList;
-        // check if duplicated
-//        instructorRecyclerAdapter = new InstructorRecyclerAdapter(instructorsList, this);
-       instructorRecyclerAdapter.listener = this;
-        instructorViewList.setAdapter(instructorRecyclerAdapter);
 
-
-        instructorRecyclerAdapter.notifyDataSetChanged(); // Notify the adapter that the data has changed
 
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public void FireStoreMangerFinishUpdating(boolean statues) {
 
+
+
     }
+
+
+
+
+
 
 
     @SuppressLint("NotifyDataSetChanged")

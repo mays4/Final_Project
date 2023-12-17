@@ -11,56 +11,27 @@ public class Instructor  implements Serializable {
     String email;
     String city;
     String subject;
+    double Latitude;
+    double longitude ;
 
-    double lang;
-    double lit;
     String image_url;
     private final String task;
 
 
-    public Instructor(String task,String name, String city, String subject, String phoneNumber, String email, double lang, double lit, String imageUrl) {
- 
+    public Instructor(String task,String name, String city, String subject, String email,String phoneNumber,  double Latitude, double longitude, String imageUrl) {
+
         this.task = task;
         this.name = name;
         this.city = city;
         this.subject = subject;
         this.phoneNumber = phoneNumber;
         this.email = email;
-        this.lang = lang;
-        this.lit = lit;
+        this.Latitude = Latitude;
+        this.longitude= longitude;
         this.image_url= imageUrl;
     }
 
-//    protected Instructor(Parcel in) {
-//        name = in.readString();
-//        phoneNumber = in.readString();
-//        email = in.readString();
-//        city = in.readString();
-//        subject = in.readString();
-//        image_url =in.readString();
-//        if (in.readByte() == 0) {
-//            lang = Double.parseDouble(null);
-//        } else {
-//            lang = in.readDouble();
-//        }
-//        if (in.readByte() == 0) {
-//            lit = Double.parseDouble(null);
-//        } else {
-//            lit = in.readDouble();
-//        }
-//    }
 
-//    public static final Creator<Instructor> CREATOR = new Creator<Instructor>() {
-//        @Override
-//        public Instructor createFromParcel(Parcel in) {
-//            return new Instructor(in);
-//        }
-//
-//        @Override
-//        public Instructor[] newArray(int size) {
-//            return new Instructor[size];
-//        }
-//    };
 
 
 
@@ -69,89 +40,45 @@ public class Instructor  implements Serializable {
         return name;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
 
-    public String getEmail() {
-        return email;
-    }
+
+
 
     public String getCity() {
         return city;
     }
 
-    public String getSubject() {
-        return subject;
-    }
 
-    public String getImage_url() {
-        return image_url;
-    }
+
+
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
 
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
 
-    public void setImage_url(String image_url) {
-        this.image_url = image_url;
-    }
+
+
+
+
+
 
     public int getId() {
         return id;
     }
 
-    public double getLang() {
-        return lang;
+    public double getLatitude() {
+        return  Latitude;
     }
 
-    public double getLit() {
-        return lit;
+    public double getLongitude() {
+        return longitude;
     }
 
-    public String getTask() {
-        return task;
-    }
-//    @Override
-//    public int describeContents() {
-//        return 0;
-//    }
 
-//    @Override
-//    public void writeToParcel(@NonNull Parcel dest, int flags) {
-//        this.dest = dest;
-//        this.flags = flags;
-//        dest.writeString(name);
-//        dest.writeString(phoneNumber);
-//        dest.writeString(email);
-//        dest.writeString(city);
-//        dest.writeString(subject);
-//        dest.writeString(image_url);
-//
-//
-//
-//            dest.writeDouble(lang);
-//
-//
-//            dest.writeDouble(lit);
-//
-//    }
 
     private String  documentID;
     public void setDocumentID(String documentID) {
@@ -163,10 +90,6 @@ public class Instructor  implements Serializable {
     }
 
 
-//    @Override
-//    public int describeContents() {
-//        return 0;
-//    }
 
 
 

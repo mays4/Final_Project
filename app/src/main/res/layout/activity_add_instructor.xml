@@ -1,8 +1,241 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddInstructorActivity">
+    tools:context=".InstructorDetails">
+
+
+    <TextView
+        android:id="@+id/name_title"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="@string/name"
+        android:gravity="center"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@id/url_title"
+        app:layout_constraintEnd_toStartOf="@+id/add_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <EditText
+        android:id="@+id/add_name"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:inputType="text"
+        android:hint="@string/name"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/name_title"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/add_url"
+        tools:ignore="LabelFor"
+        android:autofillHints="" />
+
+    <TextView
+        android:id="@+id/url_title"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="@string/url"
+        android:gravity="center"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/subject"
+        app:layout_constraintEnd_toStartOf="@+id/add_url"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/name_title" />
+
+    <EditText
+        android:id="@+id/add_url"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:inputType="textUri"
+        android:hint="@string/avatar"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@id/add_subject"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/url_title"
+        app:layout_constraintTop_toBottomOf="@id/add_name"
+        tools:ignore="ContentDescription,LabelFor,MissingConstraints,TextFields"
+        android:autofillHints="" />
+
+    <TextView
+        android:id="@+id/subject"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="@string/subject"
+        android:gravity="center"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/cityText"
+        app:layout_constraintEnd_toStartOf="@+id/add_subject"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/url_title" />
+
+    <EditText
+        android:id="@+id/add_subject"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:inputType="text"
+        android:textSize="20sp"
+        android:hint="@string/subject"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@id/add_city"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/subject"
+        app:layout_constraintTop_toBottomOf="@+id/add_url"
+        tools:ignore="LabelFor"
+        android:autofillHints="" />
+
+    <TextView
+        android:id="@+id/cityText"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="@string/city"
+        android:gravity="center"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/email_text"
+        app:layout_constraintEnd_toStartOf="@+id/add_city"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/subject"
+        />
+
+    <EditText
+        android:id="@+id/add_city"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:inputType="text"
+        android:hint="@string/city"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/add_email"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/cityText"
+        app:layout_constraintTop_toBottomOf="@+id/add_subject"
+        tools:ignore="LabelFor"
+        android:autofillHints="" />
+    <TextView
+        android:id="@+id/email_text"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="@string/email"
+        android:gravity="center"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/phone_text"
+        app:layout_constraintEnd_toStartOf="@id/add_email"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cityText" />
+
+    <EditText
+        android:id="@+id/add_email"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:inputType="textEmailAddress"
+        android:hint="@string/email"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/add_phone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/email_text"
+        app:layout_constraintTop_toBottomOf="@+id/add_city"
+        tools:ignore="LabelFor,TextFields"
+        android:autofillHints="" />
+
+    <TextView
+        android:id="@+id/phone_text"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:textColor="@color/black"
+        android:text="@string/phone"
+
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@+id/lat"
+        app:layout_constraintEnd_toStartOf="@+id/add_phone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/email_text" />
+
+    <EditText
+        android:id="@+id/add_phone"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:inputType="textMultiLine"
+        android:hint="@string/phone"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/add_lat"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/lat"
+        app:layout_constraintTop_toBottomOf="@+id/add_email"
+        tools:ignore="LabelFor,TextFields"
+        android:autofillHints="" />
+
+    <TextView
+        android:id="@+id/lat"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="@string/Latitude"
+        android:gravity="center"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/long_text"
+        app:layout_constraintEnd_toStartOf="@+id/add_lat"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/phone_text" />
+
+    <EditText
+        android:id="@+id/add_lat"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:inputType="text"
+        android:hint="@string/add_lat"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/lat"
+        app:layout_constraintTop_toBottomOf="@+id/add_phone"
+        app:layout_constraintBottom_toTopOf="@+id/add_long"
+        tools:ignore="LabelFor,MissingConstraints,TextFields"
+        android:autofillHints="" />
+
+    <TextView
+        android:id="@+id/long_text"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="@string/add_long"
+        android:gravity="center"
+
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/send_info"
+        app:layout_constraintEnd_toStartOf="@+id/add_long"
+        app:layout_constraintTop_toBottomOf="@id/lat"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/add_long"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:inputType="textEmailAddress"
+        android:hint="@string/longitude"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/send_info"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/long_text"
+        app:layout_constraintTop_toBottomOf="@+id/add_lat"
+        tools:ignore="LabelFor,TextFields"
+        android:autofillHints="" />
+
+
+    <Button
+        android:id="@+id/send_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/FireBrick"
+        android:text="@string/add"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_long"
+        app:layout_constraintBottom_toBottomOf="parent"
+       />
+
+
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

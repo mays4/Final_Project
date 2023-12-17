@@ -10,16 +10,21 @@ import androidx.appcompat.app.AppCompatActivity;
 public class EmailActivity extends AppCompatActivity {
 
     EditText editTextTo,editTextSubject,editTextMessage;
-    Button send;
+    Button send,cancel;
+    Instructor details;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_email);
 
+
         editTextTo=findViewById(R.id.editText1);
         editTextSubject=findViewById(R.id.editText2);
         editTextMessage=findViewById(R.id.editText3);
         send=findViewById(R.id.button1);
+        cancel=findViewById(R.id.button2);
+        details = (Instructor) getIntent().getSerializableExtra("details");
 
         send.setOnClickListener(arg0 -> {
             String to=editTextTo.getText().toString();
@@ -34,11 +39,27 @@ public class EmailActivity extends AppCompatActivity {
 
             email.setType("message/rfc822");
 
+
             startActivity(Intent.createChooser(email, "Choose an Email client :"));
+            editTextTo.getText().clear();
+            editTextSubject.getText().clear();
+            editTextMessage.getText().clear();
 
         });
-//        return false;
+        cancel.setOnClickListener(view -> {
+
+            Intent toDetailsIntent = new Intent(this, InstructorDetails.class);
+
+            toDetailsIntent  .putExtra("details",details);
+            startActivity(toDetailsIntent );
+
+
+        });
+
     }
+
+
+
 
 
 }

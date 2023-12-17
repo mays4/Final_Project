@@ -3,7 +3,22 @@
     <style name="Base.Theme.FinalProject" parent="Theme.MaterialComponents.DayNight.Bridge">
         <!-- Customize your light theme here. -->
         <item name="colorPrimary">@color/green</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:itemTextAppearance">@style/MenuItemTextAppearance</item>
+        <item name="searchViewStyle">@style/CustomSearchView</item>
+
     </style>
 
     <style name="Theme.FinalProject" parent="Base.Theme.FinalProject" />
+
+    <style name="MenuItemTextAppearance" parent="@android:style/TextAppearance.Widget.TextView.PopupMenu">
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+    <style name="CustomSearchView" parent="Widget.AppCompat.SearchView">
+        <!-- Change the text color here -->
+        <item name="android:editTextColor">@android:color/black</item>
+        <item name="android:textColor">@android:color/black</item>
+
+    </style>
+
 </resources>

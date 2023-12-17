@@ -3,6 +3,7 @@ package com.example.finalproject;
 
 import android.util.Log;
 
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -19,63 +20,44 @@ public class FireStoreManager {
     }
     FireStoreListener listener;
     FirebaseFirestore db =FirebaseFirestore.getInstance();
-//    public FireStoreManager ( ) {
-//        if (this.db == null)
-//
-//            this.db = FirebaseFirestore.getInstance();
-//
-//
-//    }
-//    FirebaseStorage storage = FirebaseStorage.getInstance();
-//
-//    StorageReference storageRef = storage.getReference();
 
 
 
+void deleteInstructor(Instructor instructorDelete){
+    MyApp.executorService.execute(() -> {
+        String id =  instructorDelete.getDocumentID();
+        DocumentReference docRef = db.collection("Instructor").document(id);
+        docRef.delete();
 
-//    final StorageReference ref = storageRef.child("images/current-song.png");
-//
-//    private Uri file;
-//    UploadTask uploadTask = ref.putFile(file);
-//
-//
-//    Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-//        @Override
-//        public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-//            if (!task.isSuccessful()) {
-//                throw Objects.requireNonNull(task.getException());
-//            }
-//
-//            // Continue with the task to get the download URL
-//            return ref.getDownloadUrl();
-//        }
-//    }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-//        @Override
-//        public void onComplete(@NonNull Task<Uri> task) {
-//            if (task.isSuccessful()) {
-//                Uri downloadUri = task.getResult();
-//                Log.d("test", String.valueOf(downloadUri));
-//            } else {
-//                // Handle failures
-//                // ...
-//            }
-//        }
-//    });
+    });
+
+}
 
 
+    void addInstructor(String name, String city, String subject, String phoneNumber, String email,  double latitude, double longitude, String imageUrl) {
+        {
+            Map<String, Object> instructorData = new HashMap<>();
+            instructorData.put("name", name);
+            instructorData.put("city", city);
+            instructorData.put("subject", subject);
+            instructorData.put("email", email);
+            instructorData.put("phone", phoneNumber);
+            instructorData.put("latitude",latitude);
+            instructorData.put("longitude",longitude);
+            instructorData.put("image_url", imageUrl);
 
-
-
-    void addInstructor() {
-        Map<String, Object> user = new HashMap<>();
-        user.put("name", "Ada");
-        user.put("city", "toronto");
-        db.collection("Instructor")
-                .add(user)
-                .addOnSuccessListener(documentReference -> Log.d("TAG", "DocumentSnapshot added with ID: " + documentReference.getId()))
-                .addOnFailureListener(e -> Log.w("tag", "Error adding document", e));
+            db.collection("Instructor")
+                    .add(instructorData)
+                    .addOnSuccessListener(documentReference -> {
+                        Log.d("TAG", "DocumentSnapshot added with ID: " + documentReference.getId());
+                        listener.FireStoreMangerFinishUpdating(true); // Notify the listener about the success
+                    })
+                    .addOnFailureListener(e -> {
+                        Log.w("tag", "Error adding document", e);
+                        listener.FireStoreMangerFinishUpdating(false); // Notify the listener about the failure
+                    });
+        }
     }
-
 
 
     void getAllInstructors() {
@@ -85,11 +67,6 @@ public class FireStoreManager {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
-                            Log.d("FirebaseData", "Image URL: " + document.getString("image_url"));
-                            Log.d("FirebaseData", "Location1: " + document.getDouble("latitude"));
-                            Log.d("FirebaseData", "Location2: " + document.getDouble("longitude"));
-
-                            // Handle potential null values or missing keys
                             String name = document.getString("name");
                             String city = document.getString("city");
                             String subject = document.getString("subject");
@@ -99,11 +76,7 @@ public class FireStoreManager {
                             Double longitude = document.getDouble("longitude");
                             String imageUrl = document.getString("image_url");
 
-                            // Log the values to check if any are null
-                            Log.d("FirebaseData", "Name: " + name);
-                            Log.d("FirebaseData", "lat: " + latitude);
-                            Log.d("FirebaseData", "lag: " + longitude);
-                            // ... log other fields similarly ...
+
 
                             Instructor instructor = new Instructor((String) document.get("task"),
                                     name,
@@ -111,9 +84,9 @@ public class FireStoreManager {
                                     subject,
                                     email,
                                     phone,
-                                    latitude != null ? latitude : 0.0, // Set default value or handle accordingly
-                                    longitude != null ? longitude : 0.0, // Set default value or handle accordingly
-                                    imageUrl);
+                                    latitude != null ? latitude: 0.0,
+                                    longitude != null ? longitude : 0.0,
+                                    imageUrl !=null ? imageUrl :"");
 
                             instructor.setDocumentID(document.getId());
                             listFromFireStore.add(instructor);

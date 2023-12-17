@@ -54,22 +54,19 @@ public class InstructorRecyclerAdapter   extends RecyclerView.Adapter<Instructor
 
 
         name.setText(list.get(position).name);
-
-
+        
         Picasso
                 .get()
                 .load(list.get(position).image_url)
                 .into(instructor_logo);
-        // Set up a click listener for the more_info button
+        // Setting up a click listener for the more_info button
         more_info.setOnClickListener(view -> {
-            // Perform the action you want when the button is clicked
-            // You can use the listener to handle the click event or any other logic
+
             if (listener != null) {
                 listener.onInstructorclicked(holder.getAdapterPosition());
+
             }
         });
-//
-//       holder.itemView.setOnClickListener(view -> listener.onInstructorclicked(list.get(holder.getAdapterPosition())));
     }
 
     @Override
