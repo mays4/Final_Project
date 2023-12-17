@@ -98,20 +98,19 @@ FireStoreManager.FireStoreListener{
     }
 
 
+    @Override
+    public void onInstructorclicked(int i) {
 
-
-
-
+    }
 
     @SuppressLint("NotifyDataSetChanged")
     @Override
-    public void onInstructorclicked(int i) {
+    public void onInstructorButtonclicked(int i) {
         Intent toInstructorDetails = new Intent(this, InstructorDetails.class);
 
         Instructor selectedInstructor = instructorsList.get(i);
         toInstructorDetails.putExtra("details", selectedInstructor);
         startActivity(toInstructorDetails);
         instructorRecyclerAdapter.notifyDataSetChanged();
-
     }
 }

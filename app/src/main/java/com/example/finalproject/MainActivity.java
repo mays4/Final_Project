@@ -43,11 +43,14 @@ public class MainActivity extends AppCompatActivity implements
     ArrayList<Instructor> instructorData;
     RecyclerView instructorRecyclerView;
     InstructorRecyclerAdapter adapter;
+    ArrayList<Instructor> filteredInstructors ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
 
         instructorData = ((MyApp) getApplication()).listOfInstructors;
         searchView = findViewById(R.id.search_view);
@@ -64,21 +67,17 @@ public class MainActivity extends AppCompatActivity implements
         instructorRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         fireStoreManager.getAllInstructors();
 
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
             @SuppressLint("ResourceAsColor")
             @Override
             public boolean onQueryTextSubmit(String query) {
 
-
-//                int searchTextColor = getResources().getColor(android.R.color.black);
-
-
-
                 performSearch(query);
+
                 return true;
             }
-
             @Override
             public boolean onQueryTextChange(String newText) {
                 return false;
@@ -86,8 +85,15 @@ public class MainActivity extends AppCompatActivity implements
         });
         searchView.setOnCloseListener(() -> {
             // Clear the search and return to the original list
+            map.getOverlays().clear(); // Clear map markers
             addMarkersForInstructors(instructorData);
             updateMapOrList(instructorData);
+            map.setMultiTouchControls(true);
+            map.setTileSource(TileSourceFactory.MAPNIK);
+            IMapController mapController = map.getController();
+            GeoPoint startPoint = new GeoPoint(43.7716, -79.5081);
+            mapController.setZoom(7.0);
+            mapController.setCenter(startPoint);
             return false;
         });
 
@@ -129,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements
         map.getTileProvider().clearTileCache();
         Configuration.getInstance().setCacheMapTileCount((short) 12);
         Configuration.getInstance().setCacheMapTileOvershoot((short) 12);
-
+         // Map Api
         map.setTileSource(new OnlineTileSourceBase("", 1, 20, 512, ".png",
                 new String[]{"https://a.tile.openstreetmap.org/"}) {
             @Override
@@ -146,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements
         map.setTileSource(TileSourceFactory.MAPNIK);
         IMapController mapController = map.getController();
         GeoPoint startPoint = new GeoPoint(43.7716, -79.5081);
-        mapController.setZoom(8.0);
+        mapController.setZoom(7.0);
         mapController.setCenter(startPoint);
         addMarkersForInstructors(instructorData);
     }
@@ -157,7 +163,6 @@ public class MainActivity extends AppCompatActivity implements
             createMarker(instructorLocation, instructor.getName(), instructor.getCity());
         }
     }
-
     private void createMarker(GeoPoint position, String title, String name) {
         @SuppressLint("UseCompatLoadingForDrawables") Drawable customMarkerDrawable = getResources().getDrawable(R.drawable.baseline_location_on_24);
         Marker customMarker = new Marker(map);
@@ -169,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements
 
     private void performSearch(String query) {
         if (!query.trim().isEmpty()) {
-            ArrayList<Instructor> filteredInstructors = new ArrayList<>();
+           filteredInstructors = new ArrayList<>();
             for (Instructor instructor : instructorData) {
                 if (instructor.getCity().toLowerCase(Locale.getDefault()).contains(query.toLowerCase(Locale.getDefault()))) {
                     filteredInstructors.add(instructor);
@@ -182,18 +187,22 @@ public class MainActivity extends AppCompatActivity implements
 
             updateMapOrList(filteredInstructors);
 
+
             // Zoom to the first filtered instructor's location
             if (!filteredInstructors.isEmpty()) {
                 Instructor firstInstructor = filteredInstructors.get(0);
                 GeoPoint firstInstructorLocation = new GeoPoint(firstInstructor.getLatitude(), firstInstructor.getLongitude());
                 map.getController().animateTo(firstInstructorLocation);
-                map.getController().setZoom(18.0);
+                map.getController().setZoom(19.0);
+
             }
         } else {
             // If the query is empty, show all instructors
             map.getOverlays().clear();
             addMarkersForInstructors(instructorData);
+            map.getController().setZoom(8.0);
             updateMapOrList(instructorData);
+
         }
     }
 
@@ -228,14 +237,21 @@ public class MainActivity extends AppCompatActivity implements
             fireStoreManager.getAllInstructors();
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     @Override
-    public void onInstructorclicked(int i) {
+    public void onInstructorButtonclicked(int i) {
         Intent toInstructorDetails = new Intent(this, InstructorDetails.class);
-        Instructor selectedInstructor = instructorData.get(i);
-        toInstructorDetails.putExtra("details", selectedInstructor);
-        startActivity(toInstructorDetails);
-        adapter.notifyDataSetChanged();
+
+        // Check if filteredInstructors is not null and has items
+        if (filteredInstructors != null && !filteredInstructors.isEmpty() && i < filteredInstructors.size()) {
+            Instructor selectedInstructor = filteredInstructors.get(i);
+            toInstructorDetails.putExtra("details", selectedInstructor);
+            startActivity(toInstructorDetails);
+        } else if (i < instructorData.size()) {
+            // If not in the filtered list, get the selected instructor from the original list
+            Instructor selectedInstructor = instructorData.get(i);
+            toInstructorDetails.putExtra("details", selectedInstructor);
+            startActivity(toInstructorDetails);
+        }
     }
 
     @Override
@@ -243,4 +259,21 @@ public class MainActivity extends AppCompatActivity implements
         super.onResume();
         instructorData = ((MyApp) getApplication()).listOfInstructors;
     }
+    @Override
+    public void onInstructorclicked(int i) {
+        // Zoom to the selected instructor's location on the map
+        if (filteredInstructors != null && !filteredInstructors.isEmpty() && i < filteredInstructors.size()) {
+            Instructor selectedInstructor = filteredInstructors.get(i);
+            GeoPoint selectedInstructorLocation = new GeoPoint(selectedInstructor.getLatitude(), selectedInstructor.getLongitude());
+            map.getController().animateTo(selectedInstructorLocation);
+            map.getController().setZoom(18.0);
+        } else if (i < instructorData.size()) {
+            // If not in the filtered list, zoom to the selected instructor's location from the original list
+            Instructor selectedInstructor = instructorData.get(i);
+            GeoPoint selectedInstructorLocation = new GeoPoint(selectedInstructor.getLatitude(), selectedInstructor.getLongitude());
+            map.getController().animateTo(selectedInstructorLocation);
+            map.getController().setZoom(18.0);
+        }
+    }
+
 }

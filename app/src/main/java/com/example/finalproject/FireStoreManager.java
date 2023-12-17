@@ -1,26 +1,21 @@
 package com.example.finalproject;
 
-
 import android.util.Log;
-
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 
 public class FireStoreManager {
-
     interface FireStoreListener{
         void FireStoreMangerFinishWithListOfInstructors(ArrayList<Instructor> list);
        void FireStoreMangerFinishUpdating(boolean statues);
     }
     FireStoreListener listener;
     FirebaseFirestore db =FirebaseFirestore.getInstance();
-
 
 
 void deleteInstructor(Instructor instructorDelete){
@@ -32,7 +27,6 @@ void deleteInstructor(Instructor instructorDelete){
     });
 
 }
-
 
     void addInstructor(String name, String city, String subject, String phoneNumber, String email,  double latitude, double longitude, String imageUrl) {
         {
@@ -59,7 +53,6 @@ void deleteInstructor(Instructor instructorDelete){
         }
     }
 
-
     void getAllInstructors() {
         ArrayList<Instructor> listFromFireStore = new ArrayList<>(0);
         MyApp.executorService.execute(() -> db.collection("Instructor")
@@ -75,8 +68,6 @@ void deleteInstructor(Instructor instructorDelete){
                             Double latitude = document.getDouble("latitude");
                             Double longitude = document.getDouble("longitude");
                             String imageUrl = document.getString("image_url");
-
-
 
                             Instructor instructor = new Instructor((String) document.get("task"),
                                     name,

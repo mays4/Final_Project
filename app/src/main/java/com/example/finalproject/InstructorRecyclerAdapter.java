@@ -22,6 +22,7 @@ public class InstructorRecyclerAdapter   extends RecyclerView.Adapter<Instructor
     interface InstructorListClickListener{
 //        void onInstructorSelected(Instructor selectedInstructor);
         void onInstructorclicked(int i);
+        void onInstructorButtonclicked(int i);
     }
     Context context;
     ArrayList<Instructor> list;
@@ -60,13 +61,16 @@ public class InstructorRecyclerAdapter   extends RecyclerView.Adapter<Instructor
                 .load(list.get(position).image_url)
                 .into(instructor_logo);
         // Setting up a click listener for the more_info button
+
         more_info.setOnClickListener(view -> {
-
-            if (listener != null) {
-                listener.onInstructorclicked(holder.getAdapterPosition());
-
-            }
+            // notify the activity after this click
+            listener.onInstructorButtonclicked(holder.getAdapterPosition());
         });
+        holder.itemView.setOnClickListener(v -> listener.onInstructorclicked(holder.getAdapterPosition()));
+
+
+
+
     }
 
     @Override

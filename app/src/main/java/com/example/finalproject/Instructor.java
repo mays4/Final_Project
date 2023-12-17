@@ -1,22 +1,11 @@
 package com.example.finalproject;
 
 import java.io.Serializable;
-
-//@Entity
 public class Instructor  implements Serializable {
-//   @PrimaryKey(autoGenerate = true)
     int id;
-    String name;
-    String phoneNumber;
-    String email;
-    String city;
-    String subject;
-    double Latitude;
-    double longitude ;
-
-    String image_url;
+    String name,phoneNumber,email,city,subject,image_url;
+    double Latitude,longitude;
     private final String task;
-
 
     public Instructor(String task,String name, String city, String subject, String email,String phoneNumber,  double Latitude, double longitude, String imageUrl) {
 
@@ -31,40 +20,17 @@ public class Instructor  implements Serializable {
         this.image_url= imageUrl;
     }
 
-
-
-
-
-
     public String getName() {
         return name;
     }
-
-
-
-
 
     public String getCity() {
         return city;
     }
 
-
-
-
-
     public void setName(String name) {
         this.name = name;
     }
-
-
-
-
-
-
-
-
-
-
 
     public int getId() {
         return id;
@@ -79,7 +45,6 @@ public class Instructor  implements Serializable {
     }
 
 
-
     private String  documentID;
     public void setDocumentID(String documentID) {
         this.documentID = documentID;
@@ -88,9 +53,6 @@ public class Instructor  implements Serializable {
     public String getDocumentID() {
         return documentID;
     }
-
-
-
 
 
 }

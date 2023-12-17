@@ -10,11 +10,7 @@ import java.util.concurrent.Executors;
 
 public class MyApp extends Application {
 
-
-
     ArrayList<Instructor> listOfInstructors = new ArrayList<>(0);
-
-
     static ExecutorService executorService = Executors.newFixedThreadPool(4);
     static Handler mainLooperHandler = new Handler(Looper.getMainLooper());
 

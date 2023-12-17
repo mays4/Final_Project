@@ -37,8 +37,8 @@ public class AddInstructorActivity extends AppCompatActivity implements View.OnC
             String instructorSubject = subject.getText().toString();
             String instructorEmail = email.getText().toString();
             String instructorPhone = phone.getText().toString();
-            double instructorLang = Double.parseDouble(lang.getText().toString());
             double instructorLat = Double.parseDouble(lat.getText().toString());
+            double instructorLang = Double.parseDouble(lang.getText().toString());
             String instructorImageUrl = image_url.getText().toString();
 
             fireStoreManager.addInstructor(
@@ -47,8 +47,8 @@ public class AddInstructorActivity extends AppCompatActivity implements View.OnC
                     instructorSubject,
                     instructorEmail,
                     instructorPhone,
-                    instructorLang,
                     instructorLat,
+                    instructorLang,
                     instructorImageUrl
             );
             FireStoreMangerFinishUpdating(true);
