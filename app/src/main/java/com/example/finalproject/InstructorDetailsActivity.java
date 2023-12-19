@@ -12,7 +12,7 @@ import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
-public class InstructorDetails extends AppCompatActivity{
+public class InstructorDetailsActivity extends AppCompatActivity{
 TextView name,city,phone,email,subject;
 ImageView logo;
 Button send_email;
@@ -26,8 +26,8 @@ Instructor details;
         name=findViewById(R.id.name);
         logo = findViewById(R.id.logo);
         city=findViewById(R.id.city);
-        phone=findViewById(R.id.phone);
         email=findViewById(R.id.email);
+        phone=findViewById(R.id.phone);
         send_email=findViewById(R.id.send_email);
         subject=findViewById(R.id.subject);
         if (savedInstanceState != null) {
@@ -39,8 +39,9 @@ Instructor details;
             name.setText(details.name);
             city.setText(details.city);
             subject.setText(details.subject);
-            phone.setText(details.phoneNumber);
             email.setText(details.email);
+            phone.setText(details.phoneNumber);
+
             Picasso
                     .get()
                     .load(details.image_url)
@@ -48,7 +49,7 @@ Instructor details;
         }
         send_email.setOnClickListener(view -> {
 
-            Intent toEmailIntent = new Intent(InstructorDetails.this, EmailActivity.class);
+            Intent toEmailIntent = new Intent(InstructorDetailsActivity.this, EmailActivity.class);
 
             toEmailIntent .putExtra("details",details);
             startActivity(toEmailIntent);

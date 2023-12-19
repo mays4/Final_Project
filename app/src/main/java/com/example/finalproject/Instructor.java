@@ -13,8 +13,8 @@ public class Instructor  implements Serializable {
         this.name = name;
         this.city = city;
         this.subject = subject;
-        this.phoneNumber = phoneNumber;
         this.email = email;
+        this.phoneNumber = phoneNumber;
         this.Latitude = Latitude;
         this.longitude= longitude;
         this.image_url= imageUrl;

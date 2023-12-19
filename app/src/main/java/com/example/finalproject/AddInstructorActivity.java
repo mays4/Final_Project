@@ -12,7 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 
 public class AddInstructorActivity extends AppCompatActivity implements View.OnClickListener, FireStoreManager.FireStoreListener{
-  EditText name, city,subject,lang,lat,phone,email,image_url;
+  EditText name, city,subject,longitude,latitude,phone,email,image_url;
+
   Button send;
   FireStoreManager fireStoreManager;
     @SuppressLint("CutPasteId")
@@ -23,8 +24,8 @@ public class AddInstructorActivity extends AppCompatActivity implements View.OnC
         name = findViewById(R.id.add_name);
         city=findViewById(R.id.add_city);
         subject = findViewById(R.id.add_subject);
-         lang=findViewById(R.id.add_long);
-         lat=findViewById(R.id.add_lat);
+        latitude=findViewById(R.id.add_lat);
+        longitude=findViewById(R.id.add_long);
          email=findViewById(R.id.add_email);
         phone = findViewById(R.id.add_phone);
          image_url=findViewById(R.id.add_url);
@@ -37,8 +38,8 @@ public class AddInstructorActivity extends AppCompatActivity implements View.OnC
             String instructorSubject = subject.getText().toString();
             String instructorEmail = email.getText().toString();
             String instructorPhone = phone.getText().toString();
-            double instructorLat = Double.parseDouble(lat.getText().toString());
-            double instructorLang = Double.parseDouble(lang.getText().toString());
+            double instructorLat = Double.parseDouble(latitude.getText().toString());
+            double instructorLang = Double.parseDouble(longitude.getText().toString());
             String instructorImageUrl = image_url.getText().toString();
 
             fireStoreManager.addInstructor(
@@ -54,7 +55,7 @@ public class AddInstructorActivity extends AppCompatActivity implements View.OnC
             FireStoreMangerFinishUpdating(true);
             Intent tomainIntent = new Intent(this, MainActivity.class);
             startActivity(tomainIntent);
-            finish();
+
 
 
         });

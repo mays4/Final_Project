@@ -50,8 +50,6 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
         instructorData = ((MyApp) getApplication()).listOfInstructors;
         searchView = findViewById(R.id.search_view);
 
@@ -103,6 +101,40 @@ public class MainActivity extends AppCompatActivity implements
         // Add markers for all instructors
         addMarkersForInstructors(instructorData);
     }
+
+    private void performSearch(String query) {
+        if (!query.trim().isEmpty()) {
+            filteredInstructors = new ArrayList<>();
+            for (Instructor instructor : instructorData) {
+                if (instructor.getCity().toLowerCase(Locale.getDefault()).contains(query.toLowerCase(Locale.getDefault()))) {
+                    filteredInstructors.add(instructor);
+                }
+            }
+            map.getOverlays().clear();
+
+            // Add markers for filtered instructors
+            addMarkersForInstructors(filteredInstructors);
+
+            updateMapOrList(filteredInstructors);
+
+
+            // Zoom to the first filtered instructor's location
+            if (!filteredInstructors.isEmpty()) {
+                Instructor firstInstructor = filteredInstructors.get(0);
+                GeoPoint firstInstructorLocation = new GeoPoint(firstInstructor.getLatitude(), firstInstructor.getLongitude());
+                map.getController().animateTo(firstInstructorLocation);
+                map.getController().setZoom(19.0);
+
+            }
+        } else {
+            // If the query is empty, show all instructors
+            map.getOverlays().clear();
+            addMarkersForInstructors(instructorData);
+            map.getController().setZoom(8.0);
+            updateMapOrList(instructorData);
+
+        }
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -114,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.instrouctorsList:
-                Intent toInstructorList = new Intent(this, InstructorList.class);
+                Intent toInstructorList = new Intent(this, InstructorListActivity.class);
                 startActivity(toInstructorList);
                 return true;
 
@@ -172,39 +204,7 @@ public class MainActivity extends AppCompatActivity implements
         map.getOverlays().add(customMarker);
     }
 
-    private void performSearch(String query) {
-        if (!query.trim().isEmpty()) {
-           filteredInstructors = new ArrayList<>();
-            for (Instructor instructor : instructorData) {
-                if (instructor.getCity().toLowerCase(Locale.getDefault()).contains(query.toLowerCase(Locale.getDefault()))) {
-                    filteredInstructors.add(instructor);
-                }
-            }
-            map.getOverlays().clear();
 
-            // Add markers for filtered instructors
-            addMarkersForInstructors(filteredInstructors);
-
-            updateMapOrList(filteredInstructors);
-
-
-            // Zoom to the first filtered instructor's location
-            if (!filteredInstructors.isEmpty()) {
-                Instructor firstInstructor = filteredInstructors.get(0);
-                GeoPoint firstInstructorLocation = new GeoPoint(firstInstructor.getLatitude(), firstInstructor.getLongitude());
-                map.getController().animateTo(firstInstructorLocation);
-                map.getController().setZoom(19.0);
-
-            }
-        } else {
-            // If the query is empty, show all instructors
-            map.getOverlays().clear();
-            addMarkersForInstructors(instructorData);
-            map.getController().setZoom(8.0);
-            updateMapOrList(instructorData);
-
-        }
-    }
 
     @SuppressLint("NotifyDataSetChanged")
     private void updateMapOrList(ArrayList<Instructor> updatedData) {
@@ -239,7 +239,7 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onInstructorButtonclicked(int i) {
-        Intent toInstructorDetails = new Intent(this, InstructorDetails.class);
+        Intent toInstructorDetails = new Intent(this, InstructorDetailsActivity.class);
 
         // Check if filteredInstructors is not null and has items
         if (filteredInstructors != null && !filteredInstructors.isEmpty() && i < filteredInstructors.size()) {

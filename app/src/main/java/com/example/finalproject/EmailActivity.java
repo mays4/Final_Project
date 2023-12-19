@@ -48,7 +48,7 @@ public class EmailActivity extends AppCompatActivity {
         });
         cancel.setOnClickListener(view -> {
 
-            Intent toDetailsIntent = new Intent(this, InstructorDetails.class);
+            Intent toDetailsIntent = new Intent(this, InstructorDetailsActivity.class);
 
             toDetailsIntent  .putExtra("details",details);
             startActivity(toDetailsIntent );

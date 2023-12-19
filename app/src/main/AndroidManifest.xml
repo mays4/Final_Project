@@ -29,7 +29,7 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
-            android:name=".InstructorList"
+            android:name=".InstructorListActivity"
             android:exported="true"
             android:label="Instructors List">
             <meta-data
@@ -43,7 +43,7 @@
 
         </activity>
         <activity
-            android:name=".InstructorDetails"
+            android:name=".InstructorDetailsActivity"
             android:exported="true"
             android:label="Details">
             <meta-data

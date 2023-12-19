@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
-public class InstructorList extends AppCompatActivity implements InstructorRecyclerAdapter.InstructorListClickListener,
+public class InstructorListActivity extends AppCompatActivity implements InstructorRecyclerAdapter.InstructorListClickListener,
 FireStoreManager.FireStoreListener{
 
     ArrayList<Instructor>instructorsList;
@@ -51,7 +51,7 @@ FireStoreManager.FireStoreListener{
                     public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
                         int position = viewHolder.getAdapterPosition();
 
-                        AlertDialog.Builder builder = new AlertDialog.Builder(InstructorList.this);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(InstructorListActivity.this,R.style.AlertDialogStyle);
                         builder.setMessage("are you sure you want to delete this instructor").
                                 setPositiveButton(getString(R.string.ok), (dialog, which) -> {
 
@@ -106,7 +106,7 @@ FireStoreManager.FireStoreListener{
     @SuppressLint("NotifyDataSetChanged")
     @Override
     public void onInstructorButtonclicked(int i) {
-        Intent toInstructorDetails = new Intent(this, InstructorDetails.class);
+        Intent toInstructorDetails = new Intent(this, InstructorDetailsActivity.class);
 
         Instructor selectedInstructor = instructorsList.get(i);
         toInstructorDetails.putExtra("details", selectedInstructor);

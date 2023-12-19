@@ -68,9 +68,6 @@ public class InstructorRecyclerAdapter   extends RecyclerView.Adapter<Instructor
         });
         holder.itemView.setOnClickListener(v -> listener.onInstructorclicked(holder.getAdapterPosition()));
 
-
-
-
     }
 
     @Override

@@ -28,7 +28,7 @@ void deleteInstructor(Instructor instructorDelete){
 
 }
 
-    void addInstructor(String name, String city, String subject, String phoneNumber, String email,  double latitude, double longitude, String imageUrl) {
+    void addInstructor(String name, String city, String subject, String email, String phoneNumber, double latitude, double longitude, String imageUrl) {
         {
             Map<String, Object> instructorData = new HashMap<>();
             instructorData.put("name", name);
@@ -77,7 +77,7 @@ void deleteInstructor(Instructor instructorDelete){
                                     phone,
                                     latitude != null ? latitude: 0.0,
                                     longitude != null ? longitude : 0.0,
-                                    imageUrl !=null ? imageUrl :"");
+                                    imageUrl );
 
                             instructor.setDocumentID(document.getId());
                             listFromFireStore.add(instructor);
